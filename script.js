@@ -481,172 +481,194 @@ class UIManager {
       this.applyFilters({ search: searchTerm });
     }, CONFIG.DEBOUNCE_DELAY);
   }
+
   applyFilters(additionalFilters = {}) {
+    const searchTerm = document.getElementById("searchInput").value;
+    const language = document.getElementById("languageFilter").value;
+    const category = document.getElementById("categoryFilter").value;
+
     const filters = {
-      search: document.getElementById("searchInput").value,
-      language: document.getElementById("languageFilter").value,
-      category: document.getElementById("categoryFilter").value,
+      search: searchTerm,
+      language: language,
+      category: category,
       ...additionalFilters,
     };
 
-    const filteredChannels =
-      this.platform.channelManager.filterChannels(filters);
+    const filteredChannels = this.platform.channelManager.filterChannels(filters);
     this.renderChannelGrid(filteredChannels);
   }
 
-  function generateLanguageOptions() {
-  const languages = new Set();
-
-  // Check if channels is defined and is an array
-  if (Array.isArray(this.platform.channelManager.channels)) {
-    this.platform.channelManager.channels.forEach(channel => {
-      if (Array.isArray(channel.language)) {
-        channel.language.forEach(lang => languages.add(lang));
-      }
-    });
-  } else {
-    console.error("channels is not an array or is not defined properly");
+  generateLanguageOptions() {
+    const languages = [...new Set(this.platform.channelManager.channels.flatMap(channel => channel.language))];
+    return languages
+      .map(lang => `<option value="${lang}">${lang}</option>`)
+      .join("");
   }
 
-  return Array.from(languages)
-    .map(lang => `<option value="${lang}">${lang}</option>`)
-    .join("");
-}
-
   generateCategoryOptions() {
-    const categories = new Set(
-      this.platform.channelManager.channels.map((channel) => channel.category),
-    );
-
-    return Array.from(categories)
-      .map((category) => `<option value="${category}">${category}</option>`)
+    const categories = [...new Set(this.platform.channelManager.channels.map(channel => channel.category))];
+    return categories
+      .map(category => `<option value="${category}">${category}</option>`)
       .join("");
   }
 
   updateFavoritesList() {
     const favoritesList = document.getElementById("favoritesList");
-    favoritesList.innerHTML = "";
-
     const favorites = this.platform.channelManager.favorites
-      .map((id) => this.platform.channelManager.getChannelById(id))
+      .map(id => this.platform.channelManager.getChannelById(id))
       .filter(Boolean);
 
-    favorites.forEach((channel) => {
-      const element = document.createElement("div");
-      element.className = "sidebar-item";
-      element.innerHTML = `
-                <img src="${channel.image}" alt="${channel.name}" class="sidebar-thumbnail">
-                <span>${channel.name}</span>
-            `;
-      element.addEventListener("click", () => this.playChannel(channel));
-      favoritesList.appendChild(element);
+    favoritesList.innerHTML = favorites
+      .map(channel => `
+        <div class="sidebar-item" data-channel-id="${channel.id}">
+          <img src="${channel.image}" alt="${channel.name}" class="sidebar-thumbnail">
+          <span>${channel.name}</span>
+        </div>
+      `)
+      .join("");
+
+    // Add click listeners to favorite items
+    favoritesList.querySelectorAll('.sidebar-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const channelId = item.dataset.channelId;
+        const channel = this.platform.channelManager.getChannelById(channelId);
+        this.playChannel(channel);
+      });
     });
   }
 
   updateRecentList() {
     const recentList = document.getElementById("recentList");
-    recentList.innerHTML = "";
-
     const recentChannels = this.platform.channelManager.recentlyWatched
-      .map((id) => this.platform.channelManager.getChannelById(id))
+      .map(id => this.platform.channelManager.getChannelById(id))
       .filter(Boolean);
 
-    recentChannels.forEach((channel) => {
-      const element = document.createElement("div");
-      element.className = "sidebar-item";
-      element.innerHTML = `
-                <img src="${channel.image}" alt="${channel.name}" class="sidebar-thumbnail">
-                <span>${channel.name}</span>
-            `;
-      element.addEventListener("click", () => this.playChannel(channel));
-      recentList.appendChild(element);
+    recentList.innerHTML = recentChannels
+      .map(channel => `
+        <div class="sidebar-item" data-channel-id="${channel.id}">
+          <img src="${channel.image}" alt="${channel.name}" class="sidebar-thumbnail">
+          <span>${channel.name}</span>
+        </div>
+      `)
+      .join("");
+
+    // Add click listeners to recent items
+    recentList.querySelectorAll('.sidebar-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const channelId = item.dataset.channelId;
+        const channel = this.platform.channelManager.getChannelById(channelId);
+        this.playChannel(channel);
+      });
     });
   }
 
   showPlayerContainer() {
     const playerContainer = document.getElementById("playerContainer");
+    const channelGrid = document.getElementById("channelGrid");
+    
     playerContainer.classList.remove("hidden");
-    document.getElementById("channelGrid").classList.add("hidden");
+    channelGrid.classList.add("hidden");
   }
 
   hidePlayerContainer() {
     const playerContainer = document.getElementById("playerContainer");
+    const channelGrid = document.getElementById("channelGrid");
+    
     playerContainer.classList.add("hidden");
-    document.getElementById("channelGrid").classList.remove("hidden");
-  }
-
-  applyChannelTheme(themeColor) {
-    document.documentElement.style.setProperty(
-      "--channel-theme-color",
-      themeColor,
-    );
+    channelGrid.classList.remove("hidden");
   }
 
   toggleTheme() {
     const currentTheme = this.platform.userPreferences.getPreference("theme");
-    const newTheme = {
+    const newMode = currentTheme.mode === "light" ? "dark" : "light";
+    
+    this.platform.userPreferences.setPreference("theme", {
       ...currentTheme,
-      mode: currentTheme.mode === "light" ? "dark" : "light",
-    };
-
-    this.platform.userPreferences.setPreference("theme", newTheme);
-    this.applyTheme(newTheme);
+      mode: newMode
+    });
+    
+    this.applyTheme(this.platform.userPreferences.getPreference("theme"));
   }
 
   applyTheme(theme) {
-    document.body.classList.toggle("dark-mode", theme.mode === "dark");
-    document.documentElement.style.setProperty("--theme-color", theme.color);
-    document.documentElement.style.setProperty("--font-size", theme.fontSize);
+    document.body.classList.remove("light-mode", "dark-mode");
+    document.body.classList.add(`${theme.mode}-mode`);
+    
+    document.documentElement.style.setProperty('--theme-color', theme.color);
+    document.documentElement.style.setProperty('--font-size', theme.fontSize);
+  }
+
+  applyChannelTheme(themeColor) {
+    const currentTheme = this.platform.userPreferences.getPreference("theme");
+    this.platform.userPreferences.setPreference("theme", {
+      ...currentTheme,
+      color: themeColor || CONFIG.DEFAULT_THEME_COLOR
+    });
+    
+    this.applyTheme(this.platform.userPreferences.getPreference("theme"));
   }
 
   createPreferencesPanel() {
     return `
-            <div id="preferencesPanel" class="preferences-panel hidden">
-                <div class="preferences-content">
-                    <h2>Preferences</h2>
-                    <div class="preference-section">
-                        <h3>Theme</h3>
-                        <select id="themeColor">
-                            <option value="#0057b8">Blue</option>
-                            <option value="#2ecc71">Green</option>
-                            <option value="#e74c3c">Red</option>
-                        </select>
-                        <select id="fontSize">
-                            <option value="small">Small</option>
-                            <option value="medium">Medium</option>
-                            <option value="large">Large</option>
-                        </select>
-                    </div>
-                    
-                    <div class="preference-section">
-                        <h3>Accessibility</h3>
-                        <label>
-                            <input type="checkbox" id="highContrast">
-                            High Contrast
-                        </label>
-                        <label>
-                            <input type="checkbox" id="subtitles">
-                            Enable Subtitles
-                        </label>
-                    </div>
-                    
-                    <div class="preference-section">
-                        <h3>Notifications</h3>
-                        <label>
-                            <input type="checkbox" id="programStart">
-                            Program Start Alerts
-                        </label>
-                        <label>
-                            <input type="checkbox" id="favoriteUpdates">
-                            Favorite Channel Updates
-                        </label>
-                    </div>
-                    
-                    <button id="savePreferences">Save</button>
-                    <button id="closePreferences">Close</button>
-                </div>
+      <div id="preferencesPanel" class="preferences-panel hidden">
+        <div class="preferences-content">
+          <h2>Preferences</h2>
+          
+          <section class="preference-section">
+            <h3>Appearance</h3>
+            <div class="preference-item">
+              <label for="fontSize">Font Size:</label>
+              <select id="fontSize">
+                <option value="small">Small</option>
+                <option value="medium">Medium</option>
+                <option value="large">Large</option>
+              </select>
             </div>
-        `;
+            <div class="preference-item">
+              <label for="themeColor">Theme Color:</label>
+              <input type="color" id="themeColor" value="${CONFIG.DEFAULT_THEME_COLOR}">
+            </div>
+          </section>
+
+          <section class="preference-section">
+            <h3>Accessibility</h3>
+            <div class="preference-item">
+              <label>
+                <input type="checkbox" id="highContrast">
+                High Contrast Mode
+              </label>
+            </div>
+            <div class="preference-item">
+              <label>
+                <input type="checkbox" id="subtitles">
+                Enable Subtitles
+              </label>
+            </div>
+          </section>
+
+          <section class="preference-section">
+            <h3>Notifications</h3>
+            <div class="preference-item">
+              <label>
+                <input type="checkbox" id="programStart">
+                Program Start Alerts
+              </label>
+            </div>
+            <div class="preference-item">
+              <label>
+                <input type="checkbox" id="favoriteUpdates">
+                Favorite Channel Updates
+              </label>
+            </div>
+          </section>
+
+          <div class="preference-actions">
+            <button id="savePreferences">Save</button>
+            <button id="cancelPreferences">Cancel</button>
+          </div>
+        </div>
+      </div>
+    `;
   }
 
   togglePreferencesPanel() {
@@ -654,90 +676,57 @@ class UIManager {
     panel.classList.toggle("hidden");
 
     if (!panel.classList.contains("hidden")) {
-      this.loadPreferencesIntoPanel();
+      this.loadPreferencesValues();
+      this.setupPreferencesEventListeners();
     }
   }
 
-  loadPreferencesIntoPanel() {
-    const prefs = this.platform.userPreferences.preferences;
-
-    document.getElementById("themeColor").value = prefs.theme.color;
-    document.getElementById("fontSize").value = prefs.theme.fontSize;
-    document.getElementById("highContrast").checked =
-      prefs.accessibility.highContrast;
-    document.getElementById("subtitles").checked =
-      prefs.accessibility.subtitles;
-    document.getElementById("programStart").checked =
-      prefs.notifications.programStart;
-    document.getElementById("favoriteUpdates").checked =
-      prefs.notifications.favoriteUpdates;
+  loadPreferencesValues() {
+    const preferences = this.platform.userPreferences.preferences;
+    
+    document.getElementById("fontSize").value = preferences.theme.fontSize;
+    document.getElementById("themeColor").value = preferences.theme.color;
+    document.getElementById("highContrast").checked = preferences.accessibility.highContrast;
+    document.getElementById("subtitles").checked = preferences.accessibility.subtitles;
+    document.getElementById("programStart").checked = preferences.notifications.programStart;
+    document.getElementById("favoriteUpdates").checked = preferences.notifications.favoriteUpdates;
   }
 
-  savePreferencesFromPanel() {
-    const newPrefs = {
+  setupPreferencesEventListeners() {
+    document.getElementById("savePreferences").addEventListener("click", () => {
+      this.savePreferencesValues();
+      this.togglePreferencesPanel();
+    });
+
+    document.getElementById("cancelPreferences").addEventListener("click", () => {
+      this.togglePreferencesPanel();
+    });
+  }
+
+  savePreferencesValues() {
+    const newPreferences = {
       theme: {
-        mode: this.platform.userPreferences.getPreference("theme").mode,
-        color: document.getElementById("themeColor").value,
+        ...this.platform.userPreferences.preferences.theme,
         fontSize: document.getElementById("fontSize").value,
+        color: document.getElementById("themeColor").value
       },
       accessibility: {
         highContrast: document.getElementById("highContrast").checked,
-        subtitles: document.getElementById("subtitles").checked,
+        subtitles: document.getElementById("subtitles").checked
       },
       notifications: {
         programStart: document.getElementById("programStart").checked,
-        favoriteUpdates: document.getElementById("favoriteUpdates").checked,
-      },
+        favoriteUpdates: document.getElementById("favoriteUpdates").checked
+      }
     };
 
-    Object.entries(newPrefs).forEach(([key, value]) => {
+    Object.entries(newPreferences).forEach(([key, value]) => {
       this.platform.userPreferences.setPreference(key, value);
     });
 
-    this.applyTheme(newPrefs.theme);
-    this.togglePreferencesPanel();
-  }
-
-  startProgramNotifications() {
-    setInterval(() => {
-      if (
-        !this.platform.userPreferences.getPreference("notifications")
-          .programStart
-      ) {
-        return;
-      }
-
-      const currentChannel = this.platform.channelManager.currentChannel;
-      if (!currentChannel) return;
-
-      const currentProgram = this.platform.channelManager.getCurrentProgram(
-        currentChannel.schedule,
-      );
-
-      if (currentProgram && !currentProgram.notified) {
-        this.showNotification(
-          `Now Playing on ${currentChannel.name}`,
-          currentProgram.program,
-        );
-        currentProgram.notified = true;
-      }
-    }, 60000); // Check every minute
-  }
-
-  showNotification(title, message) {
-    if ("Notification" in window && Notification.permission === "granted") {
-      new Notification(title, { body: message });
-    }
-  }
-
-  initializeNotifications() {
-    if ("Notification" in window) {
-      Notification.requestPermission();
-    }
+    this.applyTheme(newPreferences.theme);
   }
 }
 
-// Initialize the application
-document.addEventListener("DOMContentLoaded", () => {
-  const app = new LiveTVPlatform();
-});
+// Export the main application class
+export default LiveTVPlatform;
