@@ -1,0 +1,158 @@
+{
+  "channels": [
+    {
+      "id": 1,
+      "name": "Global News 24/7",
+      "videoLink": "https://example.com/streams/global-news.m3u8",
+      "type": "m3u8",
+      "description": "Round-the-clock international news coverage with live updates from around the world",
+      "category": "News",
+      "image": "https://example.com/images/global-news.jpg",
+      "language": ["English", "Spanish", "French"],
+      "schedule": [
+        {"time": "00:00", "program": "World News Tonight"},
+        {"time": "01:00", "program": "Business Report"},
+        {"time": "02:00", "program": "Tech Update"},
+        {"time": "03:00", "program": "Asia Markets Live"},
+        {"time": "06:00", "program": "Morning News Brief"},
+        {"time": "09:00", "program": "Global Politics Today"},
+        {"time": "12:00", "program": "Midday Update"},
+        {"time": "15:00", "program": "European Markets Close"},
+        {"time": "18:00", "program": "Evening News Hour"},
+        {"time": "21:00", "program": "Prime Time News"}
+      ],
+      "themeColor": "#0057b8"
+    },
+    {
+      "id": 2,
+      "name": "Sports Central",
+      "videoLink": "https://example.com/streams/sports-central.m3u8",
+      "type": "m3u8",
+      "description": "Premier sports coverage featuring live games, analysis, and highlights",
+      "category": "Sports",
+      "image": "https://example.com/images/sports-central.jpg",
+      "language": ["English", "German"],
+      "schedule": [
+        {"time": "00:00", "program": "Late Night Sports Recap"},
+        {"time": "03:00", "program": "International Soccer Highlights"},
+        {"time": "06:00", "program": "Morning Sports Center"},
+        {"time": "09:00", "program": "Live: Tennis Open"},
+        {"time": "13:00", "program": "Basketball: Game of the Week"},
+        {"time": "16:00", "program": "Soccer Match Live"},
+        {"time": "18:00", "program": "Sports Analysis Hour"},
+        {"time": "20:00", "program": "Fight Night Preview"},
+        {"time": "22:00", "program": "Sports Tonight"}
+      ],
+      "themeColor": "#e74c3c"
+    },
+    {
+      "id": 3,
+      "name": "Movie Classics",
+      "videoLink": "https://www.youtube.com/watch?v=movieclassics",
+      "type": "youtube",
+      "description": "Classic movies and timeless films from every era",
+      "category": "Entertainment",
+      "image": "https://example.com/images/movie-classics.jpg",
+      "language": ["English", "Italian"],
+      "schedule": [
+        {"time": "00:00", "program": "Film Noir Night"},
+        {"time": "03:00", "program": "Golden Age Hollywood"},
+        {"time": "06:00", "program": "Classic Comedies"},
+        {"time": "09:00", "program": "Western Marathon"},
+        {"time": "12:00", "program": "Musical Showcase"},
+        {"time": "15:00", "program": "Drama Classics"},
+        {"time": "18:00", "program": "Adventure Films"},
+        {"time": "21:00", "program": "Evening Feature Film"}
+      ],
+      "themeColor": "#2ecc71"
+    },
+    {
+      "id": 4,
+      "name": "Discover Science",
+      "videoLink": "https://example.com/streams/discover-science.m3u8",
+      "type": "m3u8",
+      "description": "Engaging scientific documentaries and educational content",
+      "category": "Education",
+      "image": "https://example.com/images/discover-science.jpg",
+      "language": ["English", "German", "French"],
+      "schedule": [
+        {"time": "00:00", "program": "Space Exploration"},
+        {"time": "02:00", "program": "Ocean Mysteries"},
+        {"time": "04:00", "program": "Tech Innovations"},
+        {"time": "06:00", "program": "Wildlife Documentary"},
+        {"time": "08:00", "program": "Science Lab Live"},
+        {"time": "10:00", "program": "Earth Sciences"},
+        {"time": "12:00", "program": "Medical Breakthroughs"},
+        {"time": "14:00", "program": "Physics Explained"},
+        {"time": "16:00", "program": "Future Technology"},
+        {"time": "18:00", "program": "Environmental Watch"},
+        {"time": "20:00", "program": "Science Tonight"}
+      ],
+      "themeColor": "#9b59b6"
+    },
+    {
+      "id": 5,
+      "name": "Kids Zone",
+      "videoLink": "https://example.com/streams/kids-zone.m3u8",
+      "type": "m3u8",
+      "description": "Safe, educational, and entertaining content for children",
+      "category": "Kids",
+      "image": "https://example.com/images/kids-zone.jpg",
+      "language": ["English", "Spanish", "French"],
+      "schedule": [
+        {"time": "06:00", "program": "Morning Cartoons"},
+        {"time": "08:00", "program": "Educational Hour"},
+        {"time": "10:00", "program": "Arts and Crafts"},
+        {"time": "12:00", "program": "Lunch Time Stories"},
+        {"time": "14:00", "program": "Adventure Time"},
+        {"time": "16:00", "program": "Science for Kids"},
+        {"time": "18:00", "program": "Evening Animation"},
+        {"time": "20:00", "program": "Bedtime Stories"}
+      ],
+      "themeColor": "#f1c40f"
+    },
+    {
+      "id": 6,
+      "name": "Local News Network",
+      "videoLink": "https://example.com/streams/local-news.m3u8",
+      "type": "m3u8",
+      "description": "Your source for local news, weather, and community events",
+      "category": "News",
+      "image": "https://example.com/images/local-news.jpg",
+      "language": ["English"],
+      "schedule": [
+        {"time": "00:00", "program": "Late Night Report"},
+        {"time": "05:00", "program": "Dawn Update"},
+        {"time": "07:00", "program": "Morning News"},
+        {"time": "09:00", "program": "Community Spotlight"},
+        {"time": "12:00", "program": "Midday News"},
+        {"time": "15:00", "program": "Local Business Report"},
+        {"time": "17:00", "program": "Evening News"},
+        {"time": "19:00", "program": "Weather Focus"},
+        {"time": "21:00", "program": "Night Report"}
+      ],
+      "themeColor": "#34495e"
+    },
+    {
+      "id": 7,
+      "name": "Music Now",
+      "videoLink": "https://www.youtube.com/watch?v=musicnow",
+      "type": "youtube",
+      "description": "Latest music videos, live performances, and artist interviews",
+      "category": "Entertainment",
+      "image": "https://example.com/images/music-now.jpg",
+      "language": ["English", "Spanish"],
+      "schedule": [
+        {"time": "00:00", "program": "Late Night Beats"},
+        {"time": "03:00", "program": "Classic Rock Hour"},
+        {"time": "06:00", "program": "Morning Playlist"},
+        {"time": "09:00", "program": "Top 40 Countdown"},
+        {"time": "12:00", "program": "Live Performance"},
+        {"time": "15:00", "program": "Artist Interview"},
+        {"time": "18:00", "program": "New Releases"},
+        {"time": "21:00", "program": "Evening Concert"}
+      ],
+      "themeColor": "#8e44ad"
+    }
+  ]
+}
