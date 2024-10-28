@@ -1,158 +1,294 @@
 {
   "channels": [
     {
-      "id": 1,
-      "name": "Global News 24/7",
-      "videoLink": "https://example.com/streams/global-news.m3u8",
-      "type": "m3u8",
-      "description": "Round-the-clock international news coverage with live updates from around the world",
+      "id": "news-24-7",
+      "name": "News 24/7",
+      "description": "Round-the-clock coverage of global news and current affairs",
       "category": "News",
-      "image": "https://example.com/images/global-news.jpg",
-      "language": ["English", "Spanish", "French"],
-      "schedule": [
-        {"time": "00:00", "program": "World News Tonight"},
-        {"time": "01:00", "program": "Business Report"},
-        {"time": "02:00", "program": "Tech Update"},
-        {"time": "03:00", "program": "Asia Markets Live"},
-        {"time": "06:00", "program": "Morning News Brief"},
-        {"time": "09:00", "program": "Global Politics Today"},
-        {"time": "12:00", "program": "Midday Update"},
-        {"time": "15:00", "program": "European Markets Close"},
-        {"time": "18:00", "program": "Evening News Hour"},
-        {"time": "21:00", "program": "Prime Time News"}
-      ],
-      "themeColor": "#0057b8"
-    },
-    {
-      "id": 2,
-      "name": "Sports Central",
-      "videoLink": "https://example.com/streams/sports-central.m3u8",
-      "type": "m3u8",
-      "description": "Premier sports coverage featuring live games, analysis, and highlights",
-      "category": "Sports",
-      "image": "https://example.com/images/sports-central.jpg",
-      "language": ["English", "German"],
-      "schedule": [
-        {"time": "00:00", "program": "Late Night Sports Recap"},
-        {"time": "03:00", "program": "International Soccer Highlights"},
-        {"time": "06:00", "program": "Morning Sports Center"},
-        {"time": "09:00", "program": "Live: Tennis Open"},
-        {"time": "13:00", "program": "Basketball: Game of the Week"},
-        {"time": "16:00", "program": "Soccer Match Live"},
-        {"time": "18:00", "program": "Sports Analysis Hour"},
-        {"time": "20:00", "program": "Fight Night Preview"},
-        {"time": "22:00", "program": "Sports Tonight"}
-      ],
-      "themeColor": "#e74c3c"
-    },
-    {
-      "id": 3,
-      "name": "Movie Classics",
-      "videoLink": "https://www.youtube.com/watch?v=movieclassics",
-      "type": "youtube",
-      "description": "Classic movies and timeless films from every era",
-      "category": "Entertainment",
-      "image": "https://example.com/images/movie-classics.jpg",
-      "language": ["English", "Italian"],
-      "schedule": [
-        {"time": "00:00", "program": "Film Noir Night"},
-        {"time": "03:00", "program": "Golden Age Hollywood"},
-        {"time": "06:00", "program": "Classic Comedies"},
-        {"time": "09:00", "program": "Western Marathon"},
-        {"time": "12:00", "program": "Musical Showcase"},
-        {"time": "15:00", "program": "Drama Classics"},
-        {"time": "18:00", "program": "Adventure Films"},
-        {"time": "21:00", "program": "Evening Feature Film"}
-      ],
-      "themeColor": "#2ecc71"
-    },
-    {
-      "id": 4,
-      "name": "Discover Science",
-      "videoLink": "https://example.com/streams/discover-science.m3u8",
-      "type": "m3u8",
-      "description": "Engaging scientific documentaries and educational content",
-      "category": "Education",
-      "image": "https://example.com/images/discover-science.jpg",
-      "language": ["English", "German", "French"],
-      "schedule": [
-        {"time": "00:00", "program": "Space Exploration"},
-        {"time": "02:00", "program": "Ocean Mysteries"},
-        {"time": "04:00", "program": "Tech Innovations"},
-        {"time": "06:00", "program": "Wildlife Documentary"},
-        {"time": "08:00", "program": "Science Lab Live"},
-        {"time": "10:00", "program": "Earth Sciences"},
-        {"time": "12:00", "program": "Medical Breakthroughs"},
-        {"time": "14:00", "program": "Physics Explained"},
-        {"time": "16:00", "program": "Future Technology"},
-        {"time": "18:00", "program": "Environmental Watch"},
-        {"time": "20:00", "program": "Science Tonight"}
-      ],
-      "themeColor": "#9b59b6"
-    },
-    {
-      "id": 5,
-      "name": "Kids Zone",
-      "videoLink": "https://example.com/streams/kids-zone.m3u8",
-      "type": "m3u8",
-      "description": "Safe, educational, and entertaining content for children",
-      "category": "Kids",
-      "image": "https://example.com/images/kids-zone.jpg",
-      "language": ["English", "Spanish", "French"],
-      "schedule": [
-        {"time": "06:00", "program": "Morning Cartoons"},
-        {"time": "08:00", "program": "Educational Hour"},
-        {"time": "10:00", "program": "Arts and Crafts"},
-        {"time": "12:00", "program": "Lunch Time Stories"},
-        {"time": "14:00", "program": "Adventure Time"},
-        {"time": "16:00", "program": "Science for Kids"},
-        {"time": "18:00", "program": "Evening Animation"},
-        {"time": "20:00", "program": "Bedtime Stories"}
-      ],
-      "themeColor": "#f1c40f"
-    },
-    {
-      "id": 6,
-      "name": "Local News Network",
-      "videoLink": "https://example.com/streams/local-news.m3u8",
-      "type": "m3u8",
-      "description": "Your source for local news, weather, and community events",
-      "category": "News",
-      "image": "https://example.com/images/local-news.jpg",
-      "language": ["English"],
-      "schedule": [
-        {"time": "00:00", "program": "Late Night Report"},
-        {"time": "05:00", "program": "Dawn Update"},
-        {"time": "07:00", "program": "Morning News"},
-        {"time": "09:00", "program": "Community Spotlight"},
-        {"time": "12:00", "program": "Midday News"},
-        {"time": "15:00", "program": "Local Business Report"},
-        {"time": "17:00", "program": "Evening News"},
-        {"time": "19:00", "program": "Weather Focus"},
-        {"time": "21:00", "program": "Night Report"}
-      ],
-      "themeColor": "#34495e"
-    },
-    {
-      "id": 7,
-      "name": "Music Now",
-      "videoLink": "https://www.youtube.com/watch?v=musicnow",
-      "type": "youtube",
-      "description": "Latest music videos, live performances, and artist interviews",
-      "category": "Entertainment",
-      "image": "https://example.com/images/music-now.jpg",
       "language": ["English", "Spanish"],
+      "image": "/api/placeholder/400/225",
+      "type": "m3u8",
+      "videoLink": "https://example.com/streams/news247.m3u8",
+      "themeColor": "#1a75ff",
       "schedule": [
-        {"time": "00:00", "program": "Late Night Beats"},
-        {"time": "03:00", "program": "Classic Rock Hour"},
-        {"time": "06:00", "program": "Morning Playlist"},
-        {"time": "09:00", "program": "Top 40 Countdown"},
-        {"time": "12:00", "program": "Live Performance"},
-        {"time": "15:00", "program": "Artist Interview"},
-        {"time": "18:00", "program": "New Releases"},
-        {"time": "21:00", "program": "Evening Concert"}
-      ],
-      "themeColor": "#8e44ad"
+        {
+          "time": "00:00",
+          "program": "Global News Tonight"
+        },
+        {
+          "time": "01:00",
+          "program": "Business Review"
+        },
+        {
+          "time": "02:00",
+          "program": "World Sports"
+        },
+        {
+          "time": "03:00",
+          "program": "Tech Today"
+        },
+        {
+          "time": "04:00",
+          "program": "Morning Headlines"
+        }
+      ]
+    },
+    {
+      "id": "sport-central",
+      "name": "Sport Central",
+      "description": "Premier sports coverage featuring live games and analysis",
+      "category": "Sports",
+      "language": ["English", "French"],
+      "image": "/api/placeholder/400/225",
+      "type": "m3u8",
+      "videoLink": "https://example.com/streams/sports.m3u8",
+      "themeColor": "#ff4d4d",
+      "schedule": [
+        {
+          "time": "00:00",
+          "program": "Night Soccer"
+        },
+        {
+          "time": "02:00",
+          "program": "Basketball Highlights"
+        },
+        {
+          "time": "03:00",
+          "program": "Tennis Live"
+        },
+        {
+          "time": "05:00",
+          "program": "Sports Analysis"
+        }
+      ]
+    },
+    {
+      "id": "movie-max",
+      "name": "Movie Max",
+      "description": "Premium movie channel featuring latest blockbusters and classics",
+      "category": "Movies",
+      "language": ["English"],
+      "image": "/api/placeholder/400/225",
+      "type": "m3u8",
+      "videoLink": "https://example.com/streams/movies.m3u8",
+      "themeColor": "#9933ff",
+      "schedule": [
+        {
+          "time": "00:00",
+          "program": "Action Movie: Speed Chase"
+        },
+        {
+          "time": "02:30",
+          "program": "Comedy: Life of Fun"
+        },
+        {
+          "time": "04:30",
+          "program": "Drama: Silent Echo"
+        }
+      ]
+    },
+    {
+      "id": "tech-hub",
+      "name": "Tech Hub",
+      "description": "Latest in technology, gadgets, and digital innovation",
+      "category": "Technology",
+      "language": ["English", "Japanese"],
+      "image": "/api/placeholder/400/225",
+      "type": "m3u8",
+      "videoLink": "https://example.com/streams/tech.m3u8",
+      "themeColor": "#00cc99",
+      "schedule": [
+        {
+          "time": "00:00",
+          "program": "Tech Review Show"
+        },
+        {
+          "time": "01:00",
+          "program": "Digital Trends"
+        },
+        {
+          "time": "02:00",
+          "program": "Game Zone"
+        },
+        {
+          "time": "03:00",
+          "program": "Future Tech"
+        }
+      ]
+    },
+    {
+      "id": "edu-world",
+      "name": "Education World",
+      "description": "Educational content for all ages",
+      "category": "Education",
+      "language": ["English", "German", "French"],
+      "image": "/api/placeholder/400/225",
+      "type": "m3u8",
+      "videoLink": "https://example.com/streams/education.m3u8",
+      "themeColor": "#ff8000",
+      "schedule": [
+        {
+          "time": "00:00",
+          "program": "Science Hour"
+        },
+        {
+          "time": "01:00",
+          "program": "History Insights"
+        },
+        {
+          "time": "02:00",
+          "program": "Math Made Easy"
+        },
+        {
+          "time": "03:00",
+          "program": "Art & Culture"
+        }
+      ]
+    },
+    {
+      "id": "cooking-plus",
+      "name": "Cooking Plus",
+      "description": "Culinary adventures from around the world",
+      "category": "Lifestyle",
+      "language": ["English", "Italian", "Spanish"],
+      "image": "/api/placeholder/400/225",
+      "type": "m3u8",
+      "videoLink": "https://example.com/streams/cooking.m3u8",
+      "themeColor": "#ff6666",
+      "schedule": [
+        {
+          "time": "00:00",
+          "program": "Global Cuisines"
+        },
+        {
+          "time": "01:00",
+          "program": "Baking Championship"
+        },
+        {
+          "time": "02:00",
+          "program": "Quick Recipes"
+        },
+        {
+          "time": "03:00",
+          "program": "Chef's Table"
+        }
+      ]
+    },
+    {
+      "id": "kids-fun",
+      "name": "Kids Fun",
+      "description": "Entertainment and educational content for children",
+      "category": "Kids",
+      "language": ["English", "Spanish", "French"],
+      "image": "/api/placeholder/400/225",
+      "type": "m3u8",
+      "videoLink": "https://example.com/streams/kids.m3u8",
+      "themeColor": "#ffcc00",
+      "schedule": [
+        {
+          "time": "00:00",
+          "program": "Morning Cartoons"
+        },
+        {
+          "time": "01:00",
+          "program": "Adventure Time"
+        },
+        {
+          "time": "02:00",
+          "program": "Science for Kids"
+        },
+        {
+          "time": "03:00",
+          "program": "Story Time"
+        }
+      ]
+    },
+    {
+      "id": "music-mix",
+      "name": "Music Mix",
+      "description": "24/7 music from all genres and eras",
+      "category": "Music",
+      "language": ["English"],
+      "image": "/api/placeholder/400/225",
+      "type": "m3u8",
+      "videoLink": "https://example.com/streams/music.m3u8",
+      "themeColor": "#cc33ff",
+      "schedule": [
+        {
+          "time": "00:00",
+          "program": "Late Night Beats"
+        },
+        {
+          "time": "01:00",
+          "program": "Classic Rock"
+        },
+        {
+          "time": "02:00",
+          "program": "Pop Hits"
+        },
+        {
+          "time": "03:00",
+          "program": "Jazz & Blues"
+        }
+      ]
+    },
+    {
+      "id": "nature-wild",
+      "name": "Nature & Wildlife",
+      "description": "Explore the natural world and wildlife",
+      "category": "Documentary",
+      "language": ["English", "German"],
+      "image": "/api/placeholder/400/225",
+      "type": "m3u8",
+      "videoLink": "https://example.com/streams/nature.m3u8",
+      "themeColor": "#33cc33",
+      "schedule": [
+        {
+          "time": "00:00",
+          "program": "Wild Africa"
+        },
+        {
+          "time": "01:30",
+          "program": "Ocean Life"
+        },
+        {
+          "time": "03:00",
+          "program": "Amazon Adventures"
+        },
+        {
+          "time": "04:30",
+          "program": "Planet Earth"
+        }
+      ]
+    },
+    {
+      "id": "drama-central",
+      "name": "Drama Central",
+      "description": "Premium drama series and shows",
+      "category": "Entertainment",
+      "language": ["English", "Korean"],
+      "image": "/api/placeholder/400/225",
+      "type": "m3u8",
+      "videoLink": "https://example.com/streams/drama.m3u8",
+      "themeColor": "#ff66b3",
+      "schedule": [
+        {
+          "time": "00:00",
+          "program": "Medical Drama"
+        },
+        {
+          "time": "01:00",
+          "program": "Crime Series"
+        },
+        {
+          "time": "02:00",
+          "program": "Romance Stories"
+        },
+        {
+          "time": "03:00",
+          "program": "Thriller Series"
+        }
+      ]
     }
   ]
 }
