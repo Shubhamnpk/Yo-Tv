@@ -494,16 +494,24 @@ class UIManager {
     this.renderChannelGrid(filteredChannels);
   }
 
-  generateLanguageOptions() {
-    const languages = new Set();
-    this.platform.channelManager.channels.forEach((channel) => {
-      channel.language.forEach((lang) => languages.add(lang));
-    });
+  function generateLanguageOptions() {
+  const languages = new Set();
 
-    return Array.from(languages)
-      .map((lang) => `<option value="${lang}">${lang}</option>`)
-      .join("");
+  // Check if channels is defined and is an array
+  if (Array.isArray(this.platform.channelManager.channels)) {
+    this.platform.channelManager.channels.forEach(channel => {
+      if (Array.isArray(channel.language)) {
+        channel.language.forEach(lang => languages.add(lang));
+      }
+    });
+  } else {
+    console.error("channels is not an array or is not defined properly");
   }
+
+  return Array.from(languages)
+    .map(lang => `<option value="${lang}">${lang}</option>`)
+    .join("");
+}
 
   generateCategoryOptions() {
     const categories = new Set(
