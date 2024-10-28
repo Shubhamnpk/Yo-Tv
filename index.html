@@ -1,318 +1,907 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Modern Live TV Platform</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
-      rel="stylesheet"
-    />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.4.12/hls.min.js"></script>
-    <style>
-      :root {
-        --channel-theme-color: #0057b8;
-        --theme-color: #0057b8;
-      }
-      .channel-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.2);
-      }
-      .channel-card {
-        transition: all 0.3s ease;
-      }
-      .sidebar-item:hover {
-        background: rgba(var(--theme-color-rgb), 0.1);
-      }
-      .video-player {
-        width: 100%;
-        aspect-ratio: 16/9;
-        background: #000;
-      }
-      .hidden {
-        display: none !important;
-      }
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
-        }
-      }
-      .fade-in {
-        animation: fadeIn 0.3s ease-in;
-      }
-    </style>
-  </head>
-  <body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
-    <div class="min-h-screen">
-      <!-- Header -->
-      <header
-        class="bg-white dark:bg-gray-800 shadow-sm fixed top-0 left-0 right-0 z-50"
-      >
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div class="flex items-center justify-between">
-            <!-- Logo and Search -->
-            <div class="flex-1 flex items-center space-x-4">
-              <div class="flex-shrink-0">
-                <h1 class="text-2xl font-bold text-gray-900 dark:text-white">
-                  LiveTV
-                </h1>
-              </div>
-              <div class="flex-1 max-w-2xl">
-                <div class="relative">
-                  <input
-                    type="text"
-                    id="searchInput"
-                    class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent"
-                    placeholder="Search channels..."
-                  />
-                </div>
-              </div>
-            </div>
-
-            <!-- Filters and Controls -->
-            <div class="flex items-center space-x-4">
-              <select
-                id="languageFilter"
-                class="px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white"
-              >
-                <option value="">All Languages</option>
-              </select>
-              <select
-                id="categoryFilter"
-                class="px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white"
-              >
-                <option value="">All Categories</option>
-              </select>
-              <button
-                id="themeToggle"
-                class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700"
-              >
-                <svg
-                  class="w-6 h-6 text-gray-600 dark:text-gray-300"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
-                  ></path>
-                </svg>
-              </button>
-              <button
-                id="preferencesButton"
-                class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700"
-              >
-                <svg
-                  class="w-6 h-6 text-gray-600 dark:text-gray-300"
-                  fill="none"
-                  stroke="currentColor"
-                  viewbox="0 0 24 24">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                  ></path>
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <!-- Main Content -->
-      <div class="pt-20 flex min-h-screen">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live TV Platform</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-gray-100">
+    <!-- Main Layout -->
+    <div class="flex h-screen">
         <!-- Sidebar -->
-        <aside
-          class="w-64 fixed left-0 top-20 bottom-0 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 overflow-y-auto"
-        >
-          <nav class="px-4 py-6 space-y-8">
-            <!-- Categories Section -->
-            <div>
-              <h3
-                class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider"
-              >
-                Categories
-              </h3>
-              <div id="categoryList" class="mt-4 space-y-2"></div>
-            </div>
+        <aside class="w-1/4 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 p-6">
+            <h2 class="text-lg font-semibold mb-4">Categories</h2>
+            <div id="categoryList" class="space-y-2"></div>
 
-            <!-- Favorites Section -->
-            <div>
-              <h3
-                class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider"
-              >
-                Favorites
-              </h3>
-              <div id="favoritesList" class="mt-4 space-y-2"></div>
-            </div>
+            <h2 class="text-lg font-semibold mt-6 mb-4">Favorites</h2>
+            <div id="favoritesList" class="space-y-2"></div>
 
-            <!-- Recently Watched Section -->
-            <div>
-              <h3
-                class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider"
-              >
-                Recently Watched
-              </h3>
-              <div id="recentList" class="mt-4 space-y-2"></div>
-            </div>
-          </nav>
+            <h2 class="text-lg font-semibold mt-6 mb-4">Recently Watched</h2>
+            <div id="recentList" class="space-y-2"></div>
         </aside>
 
-        <!-- Main Content Area -->
-        <main class="ml-64 flex-1 px-6 py-8">
-          <!-- Player Container -->
-          <div id="playerContainer" class="hidden">
-            <div
-              class="max-w-6xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden"
-            >
-              <div id="videoPlayer" class="aspect-w-16 aspect-h-9"></div>
-              <div id="programInfo" class="p-6"></div>
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col">
+            <!-- Header -->
+            <header class="bg-white dark:bg-gray-800 p-6 flex items-center justify-between border-b border-gray-200 dark:border-gray-700">
+                <div class="flex items-center space-x-4">
+                    <input id="searchInput" type="text" placeholder="Search channels..." 
+                           class="p-2 border rounded-md dark:border-gray-600 dark:bg-gray-700" />
+                    <select id="languageFilter" class="p-2 border rounded-md dark:border-gray-600 dark:bg-gray-700">
+                        <option value="">All Languages</option>
+                        <!-- Additional language options can be added dynamically -->
+                    </select>
+                    <select id="categoryFilter" class="p-2 border rounded-md dark:border-gray-600 dark:bg-gray-700">
+                        <option value="">All Categories</option>
+                        <!-- Additional category options can be added dynamically -->
+                    </select>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button id="themeToggle" class="p-2 rounded-full text-lg">🌓</button>
+                    <button id="preferencesButton" class="p-2 rounded-full text-lg">⚙️</button>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <main class="flex-1 overflow-y-auto p-6">
+                <!-- Video Player Section -->
+                <section id="playerContainer" class="hidden mb-6">
+                    <div id="videoPlayer" class="aspect-video bg-black rounded-md overflow-hidden"></div>
+                    <div id="programInfo" class="mt-4 p-4 bg-white dark:bg-gray-800 rounded-md shadow-lg"></div>
+                </section>
+
+                <!-- Channel Grid -->
+                <div id="channelGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Preferences Panel (Modal) -->
+    <div id="preferencesPanel" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-10">
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-md">
+            <h2 class="text-lg font-semibold mb-4">Preferences</h2>
+            <!-- Preferences form content can go here -->
+            <button class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg"
+                    onclick="togglePreferencesPanel()">Close</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <script>
+        // Toggle theme between light and dark mode
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark');
+        }
+
+        function togglePreferencesPanel() {
+            document.getElementById('preferencesPanel').classList.toggle('hidden');
+        }
+
+        class UIManager {
+            constructor(platform) {
+                this.platform = platform;
+                this.searchDebounceTimer = null;
+            }
+
+            initializeUI() {
+                this.createMainLayout();
+                this.setupEventListeners();
+                this.renderChannelGrid(this.platform.channelManager.channels);
+            }
+
+            createMainLayout() {
+                // Render layout in HTML structure (already provided in HTML)
+            }
+
+            setupEventListeners() {
+                // Attach event listeners
+                document.getElementById('searchInput').addEventListener('input', 
+                    (e) => this.debounceSearch(e.target.value));
+                document.getElementById('languageFilter').addEventListener('change', 
+                    (e) => this.applyFilters());
+                document.getElementById('categoryFilter').addEventListener('change', 
+                    (e) => this.applyFilters());
+                document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+                document.getElementById('preferencesButton').addEventListener('click', togglePreferencesPanel);
+            }
+
+            renderChannelGrid(channels) {
+                const grid = document.getElementById('channelGrid');
+                grid.innerHTML = '';
+
+                channels.forEach(channel => {
+                    const card = this.createChannelCard(channel);
+                    grid.appendChild(card);
+                });
+            }
+
+            createChannelCard(channel) {
+                const card = document.createElement('div');
+                card.className = 'channel-card bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4';
+                card.innerHTML = `
+                    <div class="channel-thumbnail relative">
+                        <img src="${channel.image}" alt="${channel.name}" class="w-full h-40 object-cover rounded-md">
+                        <button class="play-button absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center text-white text-2xl font-bold opacity-0 hover:opacity-100">
+                            ▶
+                        </button>
+                    </div>
+                    <div class="channel-info mt-4">
+                        <h3 class="text-lg font-semibold">${channel.name}</h3>
+                        <p class="text-sm">${channel.description}</p>
+                        <div class="language-tags flex flex-wrap mt-2">
+                            ${channel.language.map(lang => `<span class="bg-blue-500 text-white rounded-full px-2 py-1 text-xs mr-2 mb-2">${lang}</span>`).join('')}
+                        </div>
+                        <button class="favorite-button mt-4 p-2 rounded-full text-lg ${this.platform.channelManager.favorites.includes(channel.id) ? 'text-red-500' : 'text-gray-500'}">
+                            ❤️
+                        </button>
+                    </div>
+                `;
+
+                card.querySelector('.play-button').addEventListener('click', () => this.playChannel(channel));
+                card.querySelector('.favorite-button').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    this.toggleFavorite(channel);
+                });
+
+                return card;
+            }
+
+            playChannel(channel) {
+                this.platform.channelManager.currentChannel = channel;
+                this.platform.channelManager.addToRecentlyWatched(channel.id);
+                this.platform.playerManager.initializePlayer(channel);
+                this.updateProgramInfo(channel);
+                this.showPlayerContainer();
+                this.applyChannelTheme(channel.themeColor);
+            }
+
+            debounceSearch(searchTerm) {
+                clearTimeout(this.searchDebounceTimer);
+                this.searchDebounceTimer = setTimeout(() => {
+                    this.applyFilters({ search: searchTerm });
+                }, 300);
+            }
+
+            applyFilters(filters) {
+                const filteredChannels = this.platform.channelManager.filterChannels(filters);
+                this.renderChannelGrid(filteredChannels);
+            }
+        }
+    </script>
+    <script>
+      // Constants for configuration
+const CONFIG = {
+  MAX_RECENT_CHANNELS: 10,
+  DEFAULT_THEME_COLOR: "#0057b8",
+  DEBOUNCE_DELAY: 300,
+  DEFAULT_LANGUAGE: "English",
+};
+
+// Main application class
+class LiveTVPlatform {
+  constructor() {
+    this.channelManager = new ChannelManager();
+    this.userPreferences = new UserPreferences();
+    this.playerManager = new PlayerManager();
+    this.uiManager = new UIManager(this);
+
+    this.initialize();
+  }
+
+  async initialize() {
+    await this.channelManager.loadChannelData();
+    this.userPreferences.loadPreferences();
+    this.uiManager.initializeUI();
+    this.setupEventListeners();
+  }
+
+  setupEventListeners() {
+    window.addEventListener("load", () => {
+      this.uiManager.applyTheme(this.userPreferences.getPreference("theme"));
+    });
+  }
+}
+
+// Channel Management
+class ChannelManager {
+  constructor() {
+    this.channels = [];
+    this.currentChannel = null;
+    this.favorites = this.loadFromStorage("favorites") || [];
+    this.recentlyWatched = this.loadFromStorage("recentlyWatched") || [];
+  }
+
+  
+  async loadChannelData() {
+        try {
+            const response = await fetch('channels.json');
+            if (!response.ok) throw new Error('Failed to fetch channel data');
+            this.channels = await response.json();
+            return this.channels;
+        } catch (error) {
+            console.error('Error loading channel data:', error);
+            throw error;
+        }
+    } 
+  
+  getChannelById(id) {
+    return this.channels.find((channel) => channel.id === id);
+  }
+
+  toggleFavorite(channelId) {
+    const index = this.favorites.findIndex((id) => id === channelId);
+    if (index === -1) {
+      this.favorites.push(channelId);
+    } else {
+      this.favorites.splice(index, 1);
+    }
+    this.saveToStorage("favorites", this.favorites);
+    return this.favorites.includes(channelId);
+  }
+
+  addToRecentlyWatched(channelId) {
+    this.recentlyWatched = this.recentlyWatched.filter(
+      (id) => id !== channelId,
+    );
+    this.recentlyWatched.unshift(channelId);
+
+    if (this.recentlyWatched.length > CONFIG.MAX_RECENT_CHANNELS) {
+      this.recentlyWatched.pop();
+    }
+
+    this.saveToStorage("recentlyWatched", this.recentlyWatched);
+  }
+
+  getCurrentProgram(schedule) {
+    const now = new Date();
+    const currentTime = now.getHours() * 60 + now.getMinutes();
+
+    return schedule.find((slot, index) => {
+      const [hours, minutes] = slot.time.split(":").map(Number);
+      const slotTime = hours * 60 + minutes;
+      const nextSlot = schedule[index + 1];
+
+      if (!nextSlot) return slotTime <= currentTime;
+
+      const [nextHours, nextMinutes] = nextSlot.time.split(":").map(Number);
+      const nextSlotTime = nextHours * 60 + nextMinutes;
+
+      return slotTime <= currentTime && currentTime < nextSlotTime;
+    });
+  }
+
+  filterChannels(filters) {
+    return this.channels.filter((channel) => {
+      const matchesSearch =
+        !filters.search ||
+        channel.name.toLowerCase().includes(filters.search.toLowerCase()) ||
+        channel.description
+          .toLowerCase()
+          .includes(filters.search.toLowerCase());
+
+      const matchesLanguage =
+        !filters.language || channel.language.includes(filters.language);
+
+      const matchesCategory =
+        !filters.category || channel.category === filters.category;
+
+      return matchesSearch && matchesLanguage && matchesCategory;
+    });
+  }
+
+  saveToStorage(key, data) {
+    try {
+      localStorage.setItem(key, JSON.stringify(data));
+    } catch (error) {
+      console.error("Error saving to localStorage:", error);
+    }
+  }
+
+  loadFromStorage(key) {
+    try {
+      return JSON.parse(localStorage.getItem(key));
+    } catch (error) {
+      console.error("Error loading from localStorage:", error);
+      return null;
+    }
+  }
+}
+
+// User Preferences Management
+class UserPreferences {
+  constructor() {
+    this.preferences = {
+      theme: {
+        mode: "light",
+        color: CONFIG.DEFAULT_THEME_COLOR,
+        fontSize: "medium",
+      },
+      language: CONFIG.DEFAULT_LANGUAGE,
+      savedFilters: [],
+      accessibility: {
+        highContrast: false,
+        subtitles: false,
+      },
+      notifications: {
+        programStart: true,
+        favoriteUpdates: true,
+      },
+    };
+    this.loadPreferences();
+  }
+
+  loadPreferences() {
+    const saved = localStorage.getItem("userPreferences");
+    if (saved) {
+      this.preferences = { ...this.preferences, ...JSON.parse(saved) };
+    }
+  }
+
+  savePreferences() {
+    localStorage.setItem("userPreferences", JSON.stringify(this.preferences));
+  }
+
+  getPreference(key) {
+    return this.preferences[key];
+  }
+
+  setPreference(key, value) {
+    this.preferences[key] = value;
+    this.savePreferences();
+  }
+
+  addSavedFilter(filter) {
+    this.preferences.savedFilters.push(filter);
+    this.savePreferences();
+  }
+
+  removeSavedFilter(filterId) {
+    this.preferences.savedFilters = this.preferences.savedFilters.filter(
+      (filter) => filter.id !== filterId,
+    );
+    this.savePreferences();
+  }
+}
+
+// Video Player Management
+class PlayerManager {
+  constructor() {
+    this.currentPlayer = null;
+    this.hlsInstance = null;
+  }
+
+  initializePlayer(channel) {
+    const playerContainer = document.getElementById("videoPlayer");
+    playerContainer.innerHTML = "";
+
+    if (channel.type === "m3u8") {
+      return this.initializeHLSPlayer(channel.videoLink, playerContainer);
+    } else if (channel.type === "youtube") {
+      return this.initializeYoutubePlayer(channel.videoLink, playerContainer);
+    }
+  }
+
+  initializeHLSPlayer(videoLink, container) {
+    if (this.hlsInstance) {
+      this.hlsInstance.destroy();
+    }
+
+    const video = document.createElement("video");
+    video.controls = true;
+    video.classList.add("video-player");
+    container.appendChild(video);
+
+    if (Hls.isSupported()) {
+      this.hlsInstance = new Hls();
+      this.hlsInstance.loadSource(videoLink);
+      this.hlsInstance.attachMedia(video);
+      this.hlsInstance.on(Hls.Events.MANIFEST_PARSED, () => {
+        video.play();
+      });
+    } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+      video.src = videoLink;
+      video.addEventListener("loadedmetadata", () => {
+        video.play();
+      });
+    }
+
+    this.currentPlayer = video;
+    return video;
+  }
+
+  initializeYoutubePlayer(videoLink, container) {
+    const videoId = this.getYoutubeId(videoLink);
+    const iframe = document.createElement("iframe");
+
+    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+    iframe.allow =
+      "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+    iframe.allowFullscreen = true;
+    iframe.classList.add("youtube-player");
+
+    container.appendChild(iframe);
+    this.currentPlayer = iframe;
+    return iframe;
+  }
+
+  getYoutubeId(url) {
+    const regExp =
+      /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+    const match = url.match(regExp);
+    return match && match[7].length === 11 ? match[7] : false;
+  }
+
+  setVolume(volume) {
+    if (this.currentPlayer && this.currentPlayer.tagName === "VIDEO") {
+      this.currentPlayer.volume = volume;
+    }
+  }
+
+  toggleMute() {
+    if (this.currentPlayer && this.currentPlayer.tagName === "VIDEO") {
+      this.currentPlayer.muted = !this.currentPlayer.muted;
+    }
+  }
+}
+
+// UI Management
+class UIManager {
+  constructor(platform) {
+    this.platform = platform;
+    this.searchDebounceTimer = null;
+  }
+
+  initializeUI() {
+    this.createMainLayout();
+    this.setupEventListeners();
+    this.renderChannelGrid(this.platform.channelManager.channels);
+  }
+
+  createMainLayout() {
+    document.body.innerHTML = `
+            <div class="tv-platform">
+                <header class="header">
+                    <div class="search-container">
+                        <input type="text" id="searchInput" placeholder="Search channels...">
+                        <select id="languageFilter">
+                            <option value="">All Languages</option>
+                            ${this.generateLanguageOptions()}
+                        </select>
+                        <select id="categoryFilter">
+                            <option value="">All Categories</option>
+                            ${this.generateCategoryOptions()}
+                        </select>
+                    </div>
+                    <div class="user-controls">
+                        <button id="themeToggle">🌓</button>
+                        <button id="preferencesButton">⚙️</button>
+                    </div>
+                </header>
+                
+                <div class="main-content">
+                    <nav class="sidebar">
+                        <div class="nav-section">
+                            <h3>Categories</h3>
+                            <div id="categoryList"></div>
+                        </div>
+                        <div class="nav-section">
+                            <h3>Favorites</h3>
+                            <div id="favoritesList"></div>
+                        </div>
+                        <div class="nav-section">
+                            <h3>Recently Watched</h3>
+                            <div id="recentList"></div>
+                        </div>
+                    </nav>
+                    
+                    <main class="content">
+                        <div id="playerContainer" class="hidden">
+                            <div id="videoPlayer"></div>
+                            <div id="programInfo"></div>
+                        </div>
+                        <div id="channelGrid"></div>
+                    </main>
+                </div>
             </div>
-          </div>
+            ${this.createPreferencesPanel()}
+        `;
+  }
 
-          <!-- Channel Grid -->
-          <div
-            id="channelGrid"
-            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-          >
-            <!-- Channel cards will be dynamically inserted here -->
-          </div>
-        </main>
-      </div>
+  setupEventListeners() {
+    // Search and filter listeners
+    document
+      .getElementById("searchInput")
+      .addEventListener("input", (e) => this.debounceSearch(e.target.value));
 
-      <!-- Preferences Panel -->
-      <div
-        id="preferencesPanel"
-        class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center"
-      >
-        <div
-          class="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-md w-full mx-4"
-        >
-          <div class="p-6">
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-              Preferences
-            </h2>
+    document
+      .getElementById("languageFilter")
+      .addEventListener("change", (e) => this.applyFilters());
 
-            <!-- Theme Section -->
-            <div class="mb-6">
-              <h3
-                class="text-lg font-medium text-gray-900 dark:text-white mb-4"
-              >
-                Theme
-              </h3>
-              <div class="space-y-4">
-                <select
-                  id="themeColor"
-                  class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white"
-                >
-                  <option value="#0057b8">Blue</option>
-                  <option value="#2ecc71">Green</option>
-                  <option value="#e74c3c">Red</option>
-                </select>
-                <select
-                  id="fontSize"
-                  class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white"
-                >
-                  <option value="small">Small</option>
-                  <option value="medium">Medium</option>
-                  <option value="large">Large</option>
-                </select>
-              </div>
+    document
+      .getElementById("categoryFilter")
+      .addEventListener("change", (e) => this.applyFilters());
+
+    // Theme toggle
+    document
+      .getElementById("themeToggle")
+      .addEventListener("click", () => this.toggleTheme());
+
+    // Preferences panel
+    document
+      .getElementById("preferencesButton")
+      .addEventListener("click", () => this.togglePreferencesPanel());
+  }
+
+  renderChannelGrid(channels) {
+    const grid = document.getElementById("channelGrid");
+    grid.innerHTML = "";
+
+    channels.forEach((channel) => {
+      const card = this.createChannelCard(channel);
+      grid.appendChild(card);
+    });
+  }
+
+  createChannelCard(channel) {
+    const currentProgram = this.platform.channelManager.getCurrentProgram(
+      channel.schedule,
+    );
+    const isFavorite = this.platform.channelManager.favorites.includes(
+      channel.id,
+    );
+
+    const card = document.createElement("div");
+    card.className = "channel-card";
+    card.innerHTML = `
+            <div class="channel-thumbnail">
+                <img src="${channel.image}" alt="${channel.name}">
+                <button class="play-button">▶</button>
             </div>
-
-            <!-- Accessibility Section -->
-            <div class="mb-6">
-              <h3
-                class="text-lg font-medium text-gray-900 dark:text-white mb-4"
-              >
-                Accessibility
-              </h3>
-              <div class="space-y-4">
-                <label class="flex items-center">
-                  <input
-                    type="checkbox"
-                    id="highContrast"
-                    class="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                  />
-                  <span class="ml-2 text-gray-700 dark:text-gray-300"
-                    >High Contrast</span
-                  >
-                </label>
-                <label class="flex items-center">
-                  <input
-                    type="checkbox"
-                    id="subtitles"
-                    class="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                  />
-                  <span class="ml-2 text-gray-700 dark:text-gray-300"
-                    >Enable Subtitles</span
-                  >
-                </label>
-              </div>
+            <div class="channel-info">
+                <h3>${channel.name}</h3>
+                <p>${channel.description}</p>
+                <div class="language-tags">
+                    ${channel.language
+                      .map(
+                        (lang) => `<span class="language-tag">${lang}</span>`,
+                      )
+                      .join("")}
+                </div>
+                <div class="now-playing">
+                    Now Playing: ${currentProgram?.program || "No program info"}
+                </div>
+                <button class="favorite-button ${isFavorite ? "active" : ""}">
+                    ${isFavorite ? "❤️" : "🤍"}
+                </button>
             </div>
+        `;
 
-            <!-- Notifications Section -->
-            <div class="mb-6">
-              <h3
-                class="text-lg font-medium text-gray-900 dark:text-white mb-4"
-              >
-                Notifications
-              </h3>
-              <div class="space-y-4">
-                <label class="flex items-center">
-                  <input
-                    type="checkbox"
-                    id="programStart"
-                    class="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                  />
-                  <span class="ml-2 text-gray-700 dark:text-gray-300"
-                    >Program Start Alerts</span
-                  >
-                </label>
-                <label class="flex items-center">
-                  <input
-                    type="checkbox"
-                    id="favoriteUpdates"
-                    class="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                  />
-                  <span class="ml-2 text-gray-700 dark:text-gray-300"
-                    >Favorite Channel Updates</span
-                  >
-                </label>
-              </div>
-            </div>
+    // Add event listeners
+    card
+      .querySelector(".play-button")
+      .addEventListener("click", () => this.playChannel(channel));
 
-            <!-- Buttons -->
-            <div class="flex justify-end space-x-4">
-              <button
-                id="closePreferences"
-                class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
-              >
-                Cancel
-              </button>
-              <button
-                id="savePreferences"
-                class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-              >
-                Save Changes
-              </button>
+    card.querySelector(".favorite-button").addEventListener("click", (e) => {
+      e.stopPropagation();
+      this.toggleFavorite(channel);
+    });
+
+    return card;
+  }
+
+  playChannel(channel) {
+    this.platform.channelManager.currentChannel = channel;
+    this.platform.channelManager.addToRecentlyWatched(channel.id);
+    this.platform.playerManager.initializePlayer(channel);
+    this.updateProgramInfo(channel);
+    this.showPlayerContainer();
+    this.applyChannelTheme(channel.themeColor);
+  }
+
+  updateProgramInfo(channel) {
+    const programInfo = document.getElementById("programInfo");
+    const currentProgram = this.platform.channelManager.getCurrentProgram(
+      channel.schedule,
+    );
+
+    programInfo.innerHTML = `
+            <h2>${channel.name}</h2>
+            <p class="now-playing">Now Playing: ${currentProgram?.program}</p>
+            <div class="schedule">
+                <h3>Today's Schedule</h3>
+                ${this.renderSchedule(channel.schedule)}
             </div>
+        `;
+  }
+
+  renderSchedule(schedule) {
+    return `
+            <div class="schedule-list">
+                ${schedule
+                  .map(
+                    (slot) => `
+                    <div class="schedule-item">
+                        <span class="time">${slot.time}</span>
+                        <span class="program">${slot.program}</span>
+                    </div>
+                `,
+                  )
+                  .join("")}
+            </div>
+        `;
+  }
+
+  toggleFavorite(channel) {
+    const isFavorite = this.platform.channelManager.toggleFavorite(channel.id);
+    this.updateFavoritesList();
+    this.updateChannelCard(channel.id, isFavorite);
+  }
+
+  updateChannelCard(channelId, isFavorite) {
+    const card = document.querySelector(`[data-channel-id="${channelId}"]`);
+    if (card) {
+      const favoriteButton = card.querySelector(".favorite-button");
+      favoriteButton.textContent = isFavorite ? "❤️" : "🤍";
+      favoriteButton.classList.toggle("active", isFavorite);
+    }
+  }
+
+  debounceSearch(searchTerm) {
+    clearTimeout(this.searchDebounceTimer);
+    this.searchDebounceTimer = setTimeout(() => {
+      this.applyFilters({ search: searchTerm });
+    }, CONFIG.DEBOUNCE_DELAY);
+  }
+
+  applyFilters(additionalFilters = {}) {
+    const searchTerm = document.getElementById("searchInput").value;
+    const language = document.getElementById("languageFilter").value;
+    const category = document.getElementById("categoryFilter").value;
+
+    const filters = {
+      search: searchTerm,
+      language: language,
+      category: category,
+      ...additionalFilters,
+    };
+
+    const filteredChannels = this.platform.channelManager.filterChannels(filters);
+    this.renderChannelGrid(filteredChannels);
+  }
+
+  generateLanguageOptions() {
+    const languages = [...new Set(this.platform.channelManager.channels.flatMap(channel => channel.language))];
+    return languages
+      .map(lang => `<option value="${lang}">${lang}</option>`)
+      .join("");
+  }
+
+  generateCategoryOptions() {
+    const categories = [...new Set(this.platform.channelManager.channels.map(channel => channel.category))];
+    return categories
+      .map(category => `<option value="${category}">${category}</option>`)
+      .join("");
+  }
+
+  updateFavoritesList() {
+    const favoritesList = document.getElementById("favoritesList");
+    const favorites = this.platform.channelManager.favorites
+      .map(id => this.platform.channelManager.getChannelById(id))
+      .filter(Boolean);
+
+    favoritesList.innerHTML = favorites
+      .map(channel => `
+        <div class="sidebar-item" data-channel-id="${channel.id}">
+          <img src="${channel.image}" alt="${channel.name}" class="sidebar-thumbnail">
+          <span>${channel.name}</span>
+        </div>
+      `)
+      .join("");
+
+    // Add click listeners to favorite items
+    favoritesList.querySelectorAll('.sidebar-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const channelId = item.dataset.channelId;
+        const channel = this.platform.channelManager.getChannelById(channelId);
+        this.playChannel(channel);
+      });
+    });
+  }
+
+  updateRecentList() {
+    const recentList = document.getElementById("recentList");
+    const recentChannels = this.platform.channelManager.recentlyWatched
+      .map(id => this.platform.channelManager.getChannelById(id))
+      .filter(Boolean);
+
+    recentList.innerHTML = recentChannels
+      .map(channel => `
+        <div class="sidebar-item" data-channel-id="${channel.id}">
+          <img src="${channel.image}" alt="${channel.name}" class="sidebar-thumbnail">
+          <span>${channel.name}</span>
+        </div>
+      `)
+      .join("");
+
+    // Add click listeners to recent items
+    recentList.querySelectorAll('.sidebar-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const channelId = item.dataset.channelId;
+        const channel = this.platform.channelManager.getChannelById(channelId);
+        this.playChannel(channel);
+      });
+    });
+  }
+
+  showPlayerContainer() {
+    const playerContainer = document.getElementById("playerContainer");
+    const channelGrid = document.getElementById("channelGrid");
+    
+    playerContainer.classList.remove("hidden");
+    channelGrid.classList.add("hidden");
+  }
+
+  hidePlayerContainer() {
+    const playerContainer = document.getElementById("playerContainer");
+    const channelGrid = document.getElementById("channelGrid");
+    
+    playerContainer.classList.add("hidden");
+    channelGrid.classList.remove("hidden");
+  }
+
+  toggleTheme() {
+    const currentTheme = this.platform.userPreferences.getPreference("theme");
+    const newMode = currentTheme.mode === "light" ? "dark" : "light";
+    
+    this.platform.userPreferences.setPreference("theme", {
+      ...currentTheme,
+      mode: newMode
+    });
+    
+    this.applyTheme(this.platform.userPreferences.getPreference("theme"));
+  }
+
+  applyTheme(theme) {
+    document.body.classList.remove("light-mode", "dark-mode");
+    document.body.classList.add(`${theme.mode}-mode`);
+    
+    document.documentElement.style.setProperty('--theme-color', theme.color);
+    document.documentElement.style.setProperty('--font-size', theme.fontSize);
+  }
+
+  applyChannelTheme(themeColor) {
+    const currentTheme = this.platform.userPreferences.getPreference("theme");
+    this.platform.userPreferences.setPreference("theme", {
+      ...currentTheme,
+      color: themeColor || CONFIG.DEFAULT_THEME_COLOR
+    });
+    
+    this.applyTheme(this.platform.userPreferences.getPreference("theme"));
+  }
+
+  createPreferencesPanel() {
+    return `
+      <div id="preferencesPanel" class="preferences-panel hidden">
+        <div class="preferences-content">
+          <h2>Preferences</h2>
+          
+          <section class="preference-section">
+            <h3>Appearance</h3>
+            <div class="preference-item">
+              <label for="fontSize">Font Size:</label>
+              <select id="fontSize">
+                <option value="small">Small</option>
+                <option value="medium">Medium</option>
+                <option value="large">Large</option>
+              </select>
+            </div>
+            <div class="preference-item">
+              <label for="themeColor">Theme Color:</label>
+              <input type="color" id="themeColor" value="${CONFIG.DEFAULT_THEME_COLOR}">
+            </div>
+          </section>
+
+          <section class="preference-section">
+            <h3>Accessibility</h3>
+            <div class="preference-item">
+              <label>
+                <input type="checkbox" id="highContrast">
+                High Contrast Mode
+              </label>
+            </div>
+            <div class="preference-item">
+              <label>
+                <input type="checkbox" id="subtitles">
+                Enable Subtitles
+              </label>
+            </div>
+          </section>
+
+          <section class="preference-section">
+            <h3>Notifications</h3>
+            <div class="preference-item">
+              <label>
+                <input type="checkbox" id="programStart">
+                Program Start Alerts
+              </label>
+            </div>
+            <div class="preference-item">
+              <label>
+                <input type="checkbox" id="favoriteUpdates">
+                Favorite Channel Updates
+              </label>
+            </div>
+          </section>
+
+          <div class="preference-actions">
+            <button id="savePreferences">Save</button>
+            <button id="cancelPreferences">Cancel</button>
           </div>
         </div>
       </div>
-    </div>
-    <script src="script.js"></script>
-  </body>
+    `;
+  }
+
+  togglePreferencesPanel() {
+    const panel = document.getElementById("preferencesPanel");
+    panel.classList.toggle("hidden");
+
+    if (!panel.classList.contains("hidden")) {
+      this.loadPreferencesValues();
+      this.setupPreferencesEventListeners();
+    }
+  }
+
+  loadPreferencesValues() {
+    const preferences = this.platform.userPreferences.preferences;
+    
+    document.getElementById("fontSize").value = preferences.theme.fontSize;
+    document.getElementById("themeColor").value = preferences.theme.color;
+    document.getElementById("highContrast").checked = preferences.accessibility.highContrast;
+    document.getElementById("subtitles").checked = preferences.accessibility.subtitles;
+    document.getElementById("programStart").checked = preferences.notifications.programStart;
+    document.getElementById("favoriteUpdates").checked = preferences.notifications.favoriteUpdates;
+  }
+
+  setupPreferencesEventListeners() {
+    document.getElementById("savePreferences").addEventListener("click", () => {
+      this.savePreferencesValues();
+      this.togglePreferencesPanel();
+    });
+
+    document.getElementById("cancelPreferences").addEventListener("click", () => {
+      this.togglePreferencesPanel();
+    });
+  }
+
+  savePreferencesValues() {
+    const newPreferences = {
+      theme: {
+        ...this.platform.userPreferences.preferences.theme,
+        fontSize: document.getElementById("fontSize").value,
+        color: document.getElementById("themeColor").value
+      },
+      accessibility: {
+        highContrast: document.getElementById("highContrast").checked,
+        subtitles: document.getElementById("subtitles").checked
+      },
+      notifications: {
+        programStart: document.getElementById("programStart").checked,
+        favoriteUpdates: document.getElementById("favoriteUpdates").checked
+      }
+    };
+
+    Object.entries(newPreferences).forEach(([key, value]) => {
+      this.platform.userPreferences.setPreference(key, value);
+    });
+
+    this.applyTheme(newPreferences.theme);
+  }
+}
+
+// Export the main application class
+export default LiveTVPlatform;
+    </script>
+</body>
 </html>
