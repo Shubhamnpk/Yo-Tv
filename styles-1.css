@@ -1,0 +1,384 @@
+:root {
+    --primary-color: #0057b8;
+    --primary-light: #3384d5;
+    --primary-dark: #004494;
+    --background-light: #ffffff;
+    --background-dark: #1a1a1a;
+    --text-light: #ffffff;
+    --text-dark: #333333;
+    --border-radius: 12px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+  }
+  
+  /* Base Styles */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.6;
+    background-color: var(--background-light);
+    color: var(--text-dark);
+  }
+  
+  .tv-platform {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Header Styles */
+  .header {
+    background-color: var(--background-light);
+    padding: var(--spacing-md);
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--spacing-md);
+  }
+  
+  .search-container {
+    display: flex;
+    gap: var(--spacing-md);
+    flex: 1;
+    max-width: 800px;
+  }
+  
+  .search-container input,
+  .search-container select {
+    padding: 10px var(--spacing-md);
+    border: 2px solid #e1e1e1;
+    border-radius: var(--border-radius);
+    font-size: 14px;
+    transition: var(--transition);
+  }
+  
+  .search-container input {
+    flex: 1;
+  }
+  
+  .search-container input:focus,
+  .search-container select:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 87, 184, 0.1);
+  }
+  
+  .user-controls {
+    display: flex;
+    gap: var(--spacing-md);
+  }
+  
+  .user-controls button {
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: var(--spacing-sm);
+    border-radius: 50%;
+    transition: var(--transition);
+  }
+  
+  .user-controls button:hover {
+    background-color: rgba(0, 87, 184, 0.1);
+  }
+  
+  /* Main Content Layout */
+  .main-content {
+    display: flex;
+    flex: 1;
+    gap: var(--spacing-lg);
+    padding: var(--spacing-lg);
+  }
+  
+  /* Sidebar Styles */
+  .sidebar {
+    width: 280px;
+    background-color: var(--background-light);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-md);
+    box-shadow: var(--shadow);
+  }
+  
+  .nav-section {
+    margin-bottom: var(--spacing-lg);
+  }
+  
+  .nav-section h3 {
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-md);
+    font-size: 16px;
+    font-weight: 600;
+  }
+  
+  .sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-sm);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: var(--transition);
+  }
+  
+  .sidebar-item:hover {
+    background-color: rgba(0, 87, 184, 0.1);
+  }
+  
+  .sidebar-thumbnail {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+  
+  /* Channel Grid Styles */
+  #channelGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--spacing-lg);
+    flex: 1;
+  }
+  
+  .channel-card {
+    background-color: var(--background-light);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+  }
+  
+  .channel-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .channel-thumbnail {
+    position: relative;
+    padding-top: 56.25%; /* 16:9 aspect ratio */
+  }
+  
+  .channel-thumbnail img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 87, 184, 0.9);
+    color: white;
+    border: none;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    opacity: 0;
+    transition: var(--transition);
+  }
+  
+  .channel-card:hover .play-button {
+    opacity: 1;
+  }
+  
+  .channel-info {
+    padding: var(--spacing-md);
+  }
+  
+  .channel-info h3 {
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-dark);
+  }
+  
+  .language-tags {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin: var(--spacing-sm) 0;
+  }
+  
+  .language-tag {
+    background-color: rgba(0, 87, 184, 0.1);
+    color: var(--primary-color);
+    padding: 4px 8px;
+    border-radius: 16px;
+    font-size: 12px;
+  }
+  
+  .now-playing {
+    font-size: 14px;
+    color: var(--primary-color);
+    margin-top: var(--spacing-sm);
+  }
+  
+  .favorite-button {
+    position: absolute;
+    top: var(--spacing-md);
+    right: var(--spacing-md);
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    transition: var(--transition);
+  }
+  
+  /* Video Player Styles */
+  #playerContainer {
+    background-color: var(--background-light);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  
+  #videoPlayer {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background-color: black;
+  }
+  
+  #programInfo {
+    padding: var(--spacing-md);
+  }
+  
+  /* Preferences Panel Styles */
+  .preferences-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 400px;
+    background-color: var(--background-light);
+    box-shadow: -4px 0 12px rgba(0, 0, 0, 0.1);
+    padding: var(--spacing-lg);
+    transform: translateX(100%);
+    transition: var(--transition);
+    z-index: 1000;
+  }
+  
+  .preferences-panel:not(.hidden) {
+    transform: translateX(0);
+  }
+  
+  .preference-section {
+    margin-bottom: var(--spacing-lg);
+  }
+  
+  .preference-section h3 {
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .preference-item {
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .preference-actions {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+  }
+  
+  .preference-actions button {
+    flex: 1;
+    padding: var(--spacing-md);
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: var(--transition);
+  }
+  
+  .preference-actions button:first-child {
+    background-color: var(--primary-color);
+    color: white;
+  }
+  
+  .preference-actions button:last-child {
+    background-color: #e1e1e1;
+    color: var(--text-dark);
+  }
+  
+  /* Dark Mode Styles */
+  .dark-mode {
+    background-color: var(--background-dark);
+    color: var(--text-light);
+  }
+  
+  .dark-mode .header,
+  .dark-mode .sidebar,
+  .dark-mode .channel-card,
+  .dark-mode .preferences-panel,
+  .dark-mode #playerContainer {
+    background-color: #2a2a2a;
+  }
+  
+  .dark-mode .channel-info h3 {
+    color: var(--text-light);
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .main-content {
+      flex-direction: column;
+    }
+  
+    .sidebar {
+      width: 100%;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .header {
+      flex-direction: column;
+    }
+  
+    .search-container {
+      flex-direction: column;
+      width: 100%;
+    }
+  
+    #channelGrid {
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+  
+    .preferences-panel {
+      width: 100%;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .header {
+      padding: var(--spacing-sm);
+    }
+  
+    .main-content {
+      padding: var(--spacing-sm);
+    }
+  
+    #channelGrid {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  /* Utility Classes */
+  .hidden {
+    display: none !important;
+  }

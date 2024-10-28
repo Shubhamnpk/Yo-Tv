@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechStream - Modern TV Platform</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <!-- Styles -->
+    <link href="styles-1.css" rel="stylesheet">
+</head>
+<body>
+    <div class="tv-platform">
+        <!-- Header Section -->
+        <header class="header">
+            <div class="header-left">
+                <div class="logo">
+                    <i class="fas fa-tv"></i>
+                    <span>TechStream</span>
+                </div>
+            </div>
+
+            <div class="search-container">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search for channels, shows, or categories...">
+                </div>
+                
+                <div class="filter-controls">
+                    <select id="languageFilter" class="filter-select">
+                        <option value="">All Languages</option>
+                        <option value="English">English</option>
+                        <option value="Spanish">Spanish</option>
+                        <option value="French">French</option>
+                    </select>
+
+                    <select id="categoryFilter" class="filter-select">
+                        <option value="">All Categories</option>
+                        <option value="News">News</option>
+                        <option value="Sports">Sports</option>
+                        <option value="Entertainment">Entertainment</option>
+                        <option value="Technology">Technology</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="user-controls">
+                <button id="themeToggle" class="icon-button" title="Toggle Theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button id="notificationsButton" class="icon-button" title="Notifications">
+                    <i class="fas fa-bell"></i>
+                </button>
+                <button id="preferencesButton" class="icon-button" title="Preferences">
+                    <i class="fas fa-gear"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Sidebar -->
+            <nav class="sidebar">
+                <div class="nav-section">
+                    <h3><i class="fas fa-compass"></i> Browse</h3>
+                    <ul class="nav-list">
+                        <li><a href="#" class="active"><i class="fas fa-house"></i> Home</a></li>
+                        <li><a href="#"><i class="fas fa-fire"></i> Trending</a></li>
+                        <li><a href="#"><i class="fas fa-clock-rotate-left"></i> Recently Watched</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <h3><i class="fas fa-heart"></i> Favorites</h3>
+                    <div id="favoritesList" class="favorites-grid">
+                        <!-- Favorite channels will be dynamically inserted here -->
+                    </div>
+                </div>
+
+                <div class="nav-section">
+                    <h3><i class="fas fa-clock"></i> Recently Watched</h3>
+                    <div id="recentList" class="recent-list">
+                        <!-- Recently watched channels will be dynamically inserted here -->
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Main Content Area -->
+            <main class="content">
+                <!-- Player Container -->
+                <div id="playerContainer" class="hidden">
+                    <div class="player-wrapper">
+                        <div id="videoPlayer"></div>
+                        <div class="player-controls">
+                            <button class="control-button" title="Play/Pause">
+                                <i class="fas fa-play"></i>
+                            </button>
+                            <button class="control-button" title="Volume">
+                                <i class="fas fa-volume-up"></i>
+                            </button>
+                            <div class="progress-bar">
+                                <div class="progress"></div>
+                            </div>
+                            <button class="control-button" title="Full Screen">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="programInfo" class="program-info">
+                        <!-- Program information will be dynamically inserted here -->
+                    </div>
+                </div>
+
+                <!-- Channel Grid -->
+                <div id="channelGrid" class="channel-grid">
+                    <!-- Channel cards will be dynamically inserted here -->
+                </div>
+            </main>
+        </div>
+
+        <!-- Preferences Panel -->
+        <div id="preferencesPanel" class="preferences-panel hidden">
+            <div class="preferences-header">
+                <h2><i class="fas fa-gear"></i> Preferences</h2>
+                <button class="close-button" id="closePreferences">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div class="preferences-content">
+                <section class="preference-section">
+                    <h3>Appearance</h3>
+                    <div class="preference-item">
+                        <label for="fontSize">Font Size</label>
+                        <select id="fontSize" class="preference-select">
+                            <option value="small">Small</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="large">Large</option>
+                        </select>
+                    </div>
+                    <div class="preference-item">
+                        <label for="themeColor">Theme Color</label>
+                        <input type="color" id="themeColor" value="#0057b8">
+                    </div>
+                </section>
+
+                <section class="preference-section">
+                    <h3>Accessibility</h3>
+                    <div class="preference-item">
+                        <label class="toggle-label">
+                            <input type="checkbox" id="highContrast">
+                            <span class="toggle-text">High Contrast Mode</span>
+                        </label>
+                    </div>
+                    <div class="preference-item">
+                        <label class="toggle-label">
+                            <input type="checkbox" id="subtitles">
+                            <span class="toggle-text">Enable Subtitles</span>
+                        </label>
+                    </div>
+                </section>
+
+                <section class="preference-section">
+                    <h3>Notifications</h3>
+                    <div class="preference-item">
+                        <label class="toggle-label">
+                            <input type="checkbox" id="programStart" checked>
+                            <span class="toggle-text">Program Start Alerts</span>
+                        </label>
+                    </div>
+                    <div class="preference-item">
+                        <label class="toggle-label">
+                            <input type="checkbox" id="favoriteUpdates" checked>
+                            <span class="toggle-text">Favorite Channel Updates</span>
+                        </label>
+                    </div>
+                </section>
+            </div>
+
+            <div class="preferences-footer">
+                <button id="savePreferences" class="primary-button">
+                    <i class="fas fa-save"></i> Save Changes
+                </button>
+                <button id="cancelPreferences" class="secondary-button">
+                    <i class="fas fa-times"></i> Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Channel Card Template -->
+    <template id="channelCardTemplate">
+        <div class="channel-card">
+            <div class="channel-thumbnail">
+                <img src="" alt="">
+                <button class="play-button">
+                    <i class="fas fa-play"></i>
+                </button>
+                <button class="favorite-button">
+                    <i class="fas fa-heart"></i>
+                </button>
+            </div>
+            <div class="channel-info">
+                <h3></h3>
+                <p class="channel-description"></p>
+                <div class="language-tags"></div>
+                <div class="now-playing">
+                    <i class="fas fa-circle-play"></i>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.1.5/hls.min.js"></script>
+    <script src="script.js" type="module"></script>
+</body>
+</html>
